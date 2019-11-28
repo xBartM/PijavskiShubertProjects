@@ -1,11 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -Wextra
+LIBS = -lm
 
 all: PlainC/main
 
 	
 PlainC/main: PlainC/o/main.o testfunctions/o/testfunctions.o
-	${CC} PlainC/o/main.o testfunctions/o/testfunctions.o -o PlainC/main ${CFLAGS}
+	${CC} PlainC/o/main.o testfunctions/o/testfunctions.o -o  PlainC/main ${CFLAGS} ${LIBS}
 
 
 PlainC/o/main.o: PlainC/main.c 

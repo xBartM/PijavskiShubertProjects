@@ -11,3 +11,15 @@ double f2(double x);
 double f3(double x);
 double f4(double x);
 
+//  h_ is an approximation of function f_
+double h1(double x, double a, double b); // [a, b] is a given interval
+double h2(double x, double a, double b);
+double h3(double x, double a, double b);
+double h4(double x, double a, double b);
+
+//  h_min returns x for which h_ is minimal
+double h1min(double a, double b); // [a, b] is a given interval
+double h2min(double a, double b);
+double h3min(double a, double b);
+double h4min(double a, double b);
+
