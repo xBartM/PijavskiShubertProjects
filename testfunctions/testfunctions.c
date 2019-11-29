@@ -10,12 +10,12 @@ double f1(double x)
 
 double f2(double x)
 {
-    return x*x/40.0+(1.0-cos(x));
+    return x * x / 40.0 + (1.0 - cos(x));
 }
 
 double f3(double x)
 {
-   return 5.0 * (sin(0.2 * x) + cos(0.7 * x));
+    return 5.0 * (sin(0.2 * x) + cos(0.7 * x));
 }
 
 double f4(double x)
@@ -54,7 +54,6 @@ double h4(double x, double a, double b)
     double rhand = f4(b) - __L4 * (b - x);
 
     return fmax(lhand, rhand);
-
 }
 
 

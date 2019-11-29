@@ -36,7 +36,14 @@ int main(int argc, char *argv[])
     (void) argc;
     (void) argv;
     
-    // printf("%f\n", __L1);
+    // 1. Create (aproksymacja funkcji f od dolu...)
+    //  h(x) == max(f(a)-L*(x-a), f(b)-L(b-x)), where [a, b] is given interval
+    // 2. Find min(h(x)) and the point x' for which it is obtained (?)
+    //  solve for x: f(a)-L*(x-a)=f(b)+L*(x-b)
+    // 3. If h(x') is higher than any other obtained value then scrap [a, b] interval else 4.
+    // 4. Divide interval into two: [a, x'], [x', b] and start over until length of interval is bigger than set precision
+    
+    
     printf("Hello, World!\n");
     return 0;
 }
