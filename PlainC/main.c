@@ -85,7 +85,7 @@ double alg (double a, double b)
     {
         f_val = f3(xmin);
         if (global_fmin > f_val)
-            global_fmin = f3(xmin); // change global fmin -- it should have mutex on it later
+            global_fmin = f_val; // change global fmin -- it should have mutex on it later
         
         to_return1 = alg (a, xmin);
         to_return2 = alg (xmin, b);
