@@ -30,20 +30,75 @@
 // const double L2 = __L2; 
 // const double L3 = __L3;
 // const double L4 = __L4;
+
+
+const double epsilon = 0.0001; // we'll see
+double global_fmin = INFINITY;
+ 
+double alg (double, double);
  
 int main(int argc, char *argv[])
 {
     (void) argc;
     (void) argv;
+
+    // double a = __A1;
+    // double b = __B1;
+
+    // double a = __A2;
+    // double b = __B2;
+
+    double a = __A3;
+    double b = __B3;
+
+    // double a = __A4;
+    // double b = __B4;
     
-    // 1. Create (aproksymacja funkcji f od dolu...)
-    //  h(x) == max(f(a)-L*(x-a), f(b)-L(b-x)), where [a, b] is given interval
-    // 2. Find min(h(x)) and the point x' for which it is obtained (?)
-    //  solve for x: f(a)-L*(x-a)=f(b)+L*(x-b)
-    // 3. If h(x') is higher than any other obtained value then scrap [a, b] interval else 4.
-    // 4. Divide interval into two: [a, x'], [x', b] and start over until length of interval is bigger than set precision
-    
-    
+    double ret = alg(a,b);
+    printf("x=%f\nf(x)=%f\n", ret, f3(ret));
+
+   
     printf("Hello, World!\n");
     return 0;
+}
+
+
+double alg (double a, double b)
+{
+    double xmin = h3min (a, b);  //  x value for which h(x) is min 
+    double hmin = h3(xmin, a, b);  //  min(h(x))
+    double to_return1, to_return2; // temp
+    double f_val;   // temp2 xd
+    printf("a=%f, b=%f, xmin=%f, hmin=%f, global_fmin=%f, fabs=%f\n", a, b, xmin, hmin, global_fmin, fabs(a-b));
+
+    // this is important - global_fmin should be a vector, and.. W8 xd - just update global_fmin according to f_val :V - so much faster O:)
+    if (hmin > global_fmin)
+        return NAN;
+    else if (fabs(a - b) < epsilon)
+    {
+        f_val = f3(xmin);
+        if (global_fmin > f_val)
+            global_fmin = f_val; // change global fmin -- it should have mutex on it later
+        return xmin;
+    }
+    else
+    {
+        f_val = f3(xmin);
+        if (global_fmin > f_val)
+            global_fmin = f3(xmin); // change global fmin -- it should have mutex on it later
+        
+        to_return1 = alg (a, xmin);
+        to_return2 = alg (xmin, b);
+
+        if (isnan(to_return1))
+            return to_return2;
+        else if (isnan(to_return2))
+            return to_return1;
+        else if (f3(to_return1) < f3(to_return2))
+            return to_return1;
+        else
+            return to_return2;
+        
+    }
+    
 }

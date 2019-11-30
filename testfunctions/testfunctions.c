@@ -59,20 +59,20 @@ double h4(double x, double a, double b)
 
 double h1min(double a, double b)
 {
-    return (f1(a) - f1(b) + __L1 * (b - a))/(2.0 * __L1);
+    return (f1(a) - f1(b) + __L1 * (a + b))/(2.0 * __L1);
 }
 
 double h2min(double a, double b)
 {
-    return (f2(a) - f2(b) + __L2 * (b - a))/(2.0 * __L2);
+    return (f2(a) - f2(b) + __L2 * (a + b))/(2.0 * __L2);
 }
 
 double h3min(double a, double b)
 {
-    return (f3(a) - f3(b) + __L3 * (b - a))/(2.0 * __L3);
+    return (f3(a) - f3(b) + __L3 * (a + b))/(2.0 * __L3);
 }
 
 double h4min(double a, double b)
 {
-    return (f4(a) - f4(b) + __L4 * (b - a))/(2.0 * __L4);
+    return (f4(a) - f4(b) + __L4 * (a + b))/(2.0 * __L4);
 }

@@ -5,6 +5,15 @@
 #define __L3 4.13062
 #define __L4 17.3365
 
+#define __A1 -13.0
+#define __A2 -20.0
+#define __A3 -10.0
+#define __A4 -12.0
+
+#define __B1 13.0
+#define __B2 20.0
+#define __B3 15.0
+#define __B4 20.0
 
 double f1(double x);
 double f2(double x);
