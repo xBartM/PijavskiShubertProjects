@@ -22,16 +22,10 @@
 // L4 = 17.3365;
 
 #include <stdio.h>
-//#include <time.h>
 #include <sys/time.h>
 #include <math.h>
 
 #include "../testfunctions/testfunctions.h"
-
-// const double L1 = __L1;
-// const double L2 = __L2; 
-// const double L3 = __L3;
-// const double L4 = __L4;
 
 
 const double epsilon = 0.0000001; // we'll see
@@ -47,56 +41,57 @@ int main(int argc, char *argv[])
     (void) argc;
     (void) argv;
     struct timeval t1, t2;
+    double avg_time, min_time, max_time;
     double elapsed_time;
     double ret;
 
-    double a1 = __A1;
-    double b1 = __B1;
-
-    global_fmin = INFINITY;
-    gettimeofday(&t1, NULL);
-    ret = alg1(a1,b1);
-    gettimeofday(&t2, NULL);
-    elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-    elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-
-    printf("f1 time=%.3fms\nx=%f\nf(x)=%f\n\n", elapsed_time, ret, f1(ret));
-
-    double a2 = __A2;
-    double b2 = __B2;
-    
-    global_fmin = INFINITY;
-    gettimeofday(&t1, NULL);
-    ret = alg2(a2,b2);
-    gettimeofday(&t2, NULL);
-    elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-    elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-
-    printf("f2 time=%.3fms\nx=%f\nf(x)=%f\n\n", elapsed_time, ret, f2(ret));
 
     double a3 = __A3;
     double b3 = __B3;
 
-    global_fmin = INFINITY;
-    gettimeofday(&t1, NULL);
-    ret = alg3(a3,b3);
-    gettimeofday(&t2, NULL);
-    elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-    elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-
-    printf("f3 time=%.3fms\nx=%f\nf(x)=%f\n\n", elapsed_time, ret, f3(ret));
+    elapsed_time = 0;
+    avg_time = 0;
+    min_time = INFINITY;
+    max_time = 0;
+    for (int i = 0; i < 1000; ++i) {
+        global_fmin = INFINITY;
+        gettimeofday(&t1, NULL);
+        ret = alg3(a3,b3);
+        gettimeofday(&t2, NULL);
+        elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+        elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+        avg_time += elapsed_time;
+        if (min_time > elapsed_time)
+            min_time = elapsed_time;
+        if (max_time < elapsed_time)
+            max_time = elapsed_time;
+    }
+    avg_time /= 1000;
+    printf("f3 average time=%.3fms\nf3 min time=%.3fms\nf3 max time=%.3fms\nx=%f\nf(x)=%f\n\n", avg_time, min_time, max_time, ret, f3(ret));
 
     double a4 = __A4;
     double b4 = __B4;
     
-    global_fmin = INFINITY; 
-    gettimeofday(&t1, NULL);
-    ret = alg4(a4,b4);
-    gettimeofday(&t2, NULL);
-    elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-    elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-
-    printf("f4 time=%.3fms\nx=%f\nf(x)=%f\n\n", elapsed_time, ret, f4(ret));
+    elapsed_time = 0;
+    avg_time = 0;
+    min_time = INFINITY;
+    max_time = 0;
+    for (int i = 0; i < 1000; ++i) {
+        global_fmin = INFINITY; 
+        gettimeofday(&t1, NULL);
+        ret = alg4(a4,b4);
+        gettimeofday(&t2, NULL);
+        elapsed_time = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+        elapsed_time += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+        avg_time += elapsed_time;
+        if (min_time > elapsed_time)
+            min_time = elapsed_time;
+        if (max_time < elapsed_time)
+            max_time = elapsed_time;
+        
+    }
+    avg_time /= 1000;
+    printf("f4 average time=%.3fms\nf4 min time=%.3fms\nf4 max time=%.3fms\nx=%f\nf(x)=%f\n\n", avg_time, min_time, max_time, ret, f4(ret));
     return 0;
 }
 
