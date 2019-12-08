@@ -204,7 +204,7 @@ void alg4 (double a, double b, int depth)
             }
         }
 
-        if (depth == 15)    // gets best performance
+        if (depth == 15)
         {
             #pragma omp parallel  // num_threads(16) 
             {

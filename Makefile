@@ -18,18 +18,11 @@ OpenMP/main: OpenMP/o/main.o testfunctions/o/testfunctions.o
 	${CC} OpenMP/o/main.o testfunctions/o/testfunctions.o -o  OpenMP/main ${CFLAGS} ${LIBS} ${MPFLAGS}
 
 
-# AVX2/main: AVX2/o/main.o
-	# ${CC} AVX2/o/main.o -o  AVX2/main ${CFLAGS} ${LIBS}
-
-
 PlainC/o/main.o: PlainC/main.c 
 	${CC} PlainC/main.c -o PlainC/o/main.o -c ${CFLAGS} ${VECTORIZE}
 
 OpenMP/o/main.o: OpenMP/main.c 
 	${CC} OpenMP/main.c -o OpenMP/o/main.o -c ${CFLAGS} ${MPFLAGS}
-
-# AVX2/o/main.o: AVX2/main.c 
-	# ${CC} AVX2/main.c -o AVX2/o/main.o -c ${CFLAGS}
 
 
 testfunctions/o/testfunctions.o: testfunctions/testfunctions.c testfunctions/testfunctions.h
