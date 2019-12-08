@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     avg_time = 0;
     min_time = INFINITY;
     max_time = 0;
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 1000; ++i) {
         global_fmin = INFINITY;
         gettimeofday(&t1, NULL);
         // ret = alg3(a3,b3,0);
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         if (max_time < elapsed_time)
             max_time = elapsed_time;
     }
-    avg_time /= 100;
+    avg_time /= 1000;
     printf("f3 average time=%.3fms\nf3 min time=%.3fms\nf3 max time=%.3fms\nx=%f\nf(x)=%f\nglobal_fmin%f\n\n", avg_time, min_time, max_time, ret, f3(ret), global_fmin);
 
     double a4 = __A4;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     avg_time = 0;
     min_time = INFINITY;
     max_time = 0;
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 1000; ++i) {
         global_fmin = INFINITY; 
         gettimeofday(&t1, NULL);
         alg4(a4,b4,0);
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
             max_time = elapsed_time;
         
     }
-    avg_time /= 100;
+    avg_time /= 1000;
     printf("f4 average time=%.3fms\nf4 min time=%.3fms\nf4 max time=%.3fms\nx=%f\nf(x)=%f\n\n", avg_time, min_time, max_time, ret, f4(ret));
     return 0;
 }
