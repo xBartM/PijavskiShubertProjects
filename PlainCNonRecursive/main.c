@@ -46,8 +46,6 @@ const double epsilon = 0.0000001; // we'll see
 double global_fmin = INFINITY;
 double global_xmin = 0;
 
-double alg3 (double, double);
- 
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -74,6 +72,8 @@ int main(int argc, char *argv[])
     double a3 = __A3;
     double b3 = __B3;
     double xmin;
+    double hmin;
+    double f_val;
 
     Ival_write_ptr->a = a3;
     Ival_write_ptr->b = b3;
@@ -98,7 +98,25 @@ int main(int argc, char *argv[])
             a3 = Ival_read_ptr->a;
             b3 = Ival_read_ptr->b;
 
-            xmin = alg3(a3, b3);
+            // actual algorithm - inlining gives superior performacne :O
+
+            xmin = h3min (a3, b3);  //  x value for which h(x) is min 
+            hmin = h3(xmin, a3, b3);  //  min(h(x))
+            
+            // printf("a=%f, b=%f, xmin=%f, hmin=%f, global_fmin=%f, fabs=%f\n", a, b, xmin, hmin, global_fmin, fabs(a-b));
+
+            if (hmin > global_fmin)
+                xmin = NAN;
+            else
+            {
+                f_val = f3(xmin);
+                if (global_fmin > f_val)
+                {
+                    global_fmin = f_val; // change global fmin -- it should have mutex on it later
+                    global_xmin = xmin;
+                }
+                
+            }
 
             if (!isnan(xmin))
             {
@@ -145,28 +163,3 @@ int main(int argc, char *argv[])
 }
 
 
-
-
-double alg3 (double a, double b)
-{
-    double xmin = h3min (a, b);  //  x value for which h(x) is min 
-    double hmin = h3(xmin, a, b);  //  min(h(x))
-    double f_val;   // temp
-    // printf("a=%f, b=%f, xmin=%f, hmin=%f, global_fmin=%f, fabs=%f\n", a, b, xmin, hmin, global_fmin, fabs(a-b));
-
-    if (hmin > global_fmin)
-        return NAN;
-    else
-    {
-        f_val = f3(xmin);
-        if (global_fmin > f_val)
-        {
-            global_fmin = f_val; // change global fmin -- it should have mutex on it later
-            global_xmin = xmin;
-        }
-        
-        return xmin;
-
-    }
-    
-}
