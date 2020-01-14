@@ -1,10 +1,11 @@
 CC = gcc #-mavx2
+MPICC = mpicc
 CFLAGS = -Wall -pedantic -Wextra
 VECTORIZE = -ftree-vectorize -fopt-info-vec-all #-O3 -ftree-vectorizer-verbose=2 -msse2 -ffast-math
 MPFLAGS = -fopenmp
 LIBS = -lm
 
-all: PlainC/main PlainC/mainv PlainCNonRecursive/main OpenMP/main OpenMPNonRecursive/main 
+all: PlainC/main PlainC/mainv PlainCNonRecursive/main OpenMP/main OpenMPNonRecursive/main OpenMPINonRecursive/main 
 
 	
 PlainC/main: PlainC/o/main.o testfunctions/o/testfunctions.o
@@ -25,6 +26,10 @@ OpenMPNonRecursive/main: OpenMPNonRecursive/o/main.o testfunctions/o/testfunctio
 	${CC} OpenMPNonRecursive/o/main.o testfunctions/o/testfunctions.o -o  OpenMPNonRecursive/main ${CFLAGS} ${LIBS} ${MPFLAGS} 
 
 
+OpenMPINonRecursive/main: OpenMPINonRecursive/o/main.o testfunctions/o/testfunctions.o
+	${MPICC} OpenMPINonRecursive/o/main.o testfunctions/o/testfunctions.o -o  OpenMPINonRecursive/main ${CFLAGS} ${LIBS} 
+
+
 PlainC/o/main.o: PlainC/main.c 
 	${CC} PlainC/main.c -o PlainC/o/main.o -c ${CFLAGS} ${VECTORIZE}
 
@@ -38,14 +43,18 @@ OpenMPNonRecursive/o/main.o: OpenMPNonRecursive/main.c
 	${CC} OpenMPNonRecursive/main.c -o OpenMPNonRecursive/o/main.o -c ${CFLAGS} ${MPFLAGS}
 
 
+OpenMPINonRecursive/o/main.o: OpenMPINonRecursive/main.c 
+	${MPICC} OpenMPINonRecursive/main.c -o OpenMPINonRecursive/o/main.o -c ${CFLAGS}
+
+
 testfunctions/o/testfunctions.o: testfunctions/testfunctions.c testfunctions/testfunctions.h
 	${CC} testfunctions/testfunctions.c -o testfunctions/o/testfunctions.o -c ${CFLAGS}
 
 
 clean_intermediate:
-	rm -f PlainC/o/*.o AVX2/o/*.o testfunctions/o/*.o
+	rm -f PlainC/o/*.o PlainCNonRecursive/o/*.o AVX2/o/*.o testfunctions/o/*.o OpenMP/o/*.o OpenMPNonRecursive/o/*.o OpenMPINonRecursive/o/*.o
 
 clean_bin:
-	rm -f PlainC/main PlainC/mainv PlainCNonRecursive/main OpenMP/main OpenMPNonRecursive/main AVX2/main
+	rm -f PlainC/main PlainC/mainv PlainCNonRecursive/main OpenMP/main OpenMPNonRecursive/main OpenMPINonRecursive/main AVX2/main
 
 clean: clean_intermediate clean_bin

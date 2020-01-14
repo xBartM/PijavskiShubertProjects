@@ -48,13 +48,6 @@ double global_xmin = 0;
 
 int main(int argc, char *argv[])
 {
-    if (getenv("OMP_CANCELLATION") == NULL)
-    {
-        fprintf(stderr, "No OMP_CANCELLATION env\n");
-        fprintf(stderr, "Run: export OMP_CANCELLATION=\"true\"\n");
-        return -1;
-    }
-
     if (argc != 3)
     {
         fprintf(stderr, "Need more args:\n");
